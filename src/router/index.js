@@ -1,11 +1,11 @@
 import { createWebHistory, createRouter } from "vue-router";
 import authRoutes from "./authRoutes.js";
-import userRoutes from "./userRoutes.js";
 import useAuthStore from "@/stores/auth.store.js";
+import userRoutes from "@/router/userRoutes.js";
 
 const routes = [
     ...authRoutes,
-    ...userRoutes
+    ...userRoutes,
 ]
 
 const router = createRouter({
@@ -19,8 +19,7 @@ router.beforeEach((to, from, next) => {
     }
 
     const authStore = useAuthStore()
-    const role = authStore.$state?.role
-    console.log({role})
+    const role = authStore.getRole
     if (role != to.meta.role) {
         return next({ name: 'login' })
     }

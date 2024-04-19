@@ -45,14 +45,14 @@
             </label>
         </div>
         <div class="submit-form">
-            <submit-btn @submit="handleSubmit"></submit-btn>
+            <btn @submit="handleSubmit" :contentComponent="'<p>Submit</p>'"></btn>
         </div>
     </form>
 </template>
 
 <script>
-import SubmitBtn from "@/components/Auth/SubmitBtn.vue";
-import TitleForm from "@/components/Auth/TitleForm.vue";
+import TitleForm from "@/components/Common/TitleForm.vue";
+import Btn from "@/components/Common/Btn.vue";
 
 export default {
     props: {
@@ -77,8 +77,8 @@ export default {
         }
     },
     components: {
-        SubmitBtn,
         TitleForm,
+        Btn,
     },
     methods: {
         getData() {
@@ -98,7 +98,8 @@ export default {
                 password: this.password,
             }
         },
-        handleSubmit() {
+        handleSubmit(event) {
+            event.preventDefault();
             this.$emit('submit', this.getData());
         }
     },

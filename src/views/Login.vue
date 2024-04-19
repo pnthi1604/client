@@ -1,29 +1,22 @@
 <template>
     <div class="container">
-        <login :isRegister="isRegister" :titleForm="titleForm" @submit="handleSubmit"></login>
-        <div class="not-have-account">
-            <p>Bạn chưa có tài khoản?
-                <router-link to="/register">Đăng ký ngay</router-link>
-            </p>
-        </div>
+        <login :isRegister="false" :titleForm="titleForm" @submit="handleSubmit"></login>
     </div>
 </template>
 
 <script>
 import Login from "@/components/Auth/Auth.vue";
 import authService from "@/services/auth.service";
-import useUserStore from '@/stores/user.store';
 import { mapStores } from 'pinia'
 import useAuthStore from "@/stores/auth.store"
+import userService from "@/services/user.service"
 
 export default {
     computed: {
-        ...mapStores(useUserStore),
         ...mapStores(useAuthStore)
     },
     data() {
         return {
-            isRegister: false,
             titleForm: 'Đăng nhập'
         };
     },
@@ -32,13 +25,20 @@ export default {
     },
     methods: {
         async handleSubmit(data) {
-            try {
-                const response = await authService.login(data)
-                this.authStore.setRole(response?.data?.data?.role)
-                alert(response.data.message)
+            const res = await authService.login(data);
+            if (res.status == "success") {
+                const responseGetUser = await userService.getUserById(res.data.id)
+                if (responseGetUser.status == "error") {
+                    alert(responseGetUser.message)
+                    return
+                }
+                this.authStore.setUser(responseGetUser.data)
+                this.authStore.setRole(res.data.role)
+                console.log(this.authStore.getUser)
+                alert(res.message)
                 this.$router.push({ name: "userPage"})
-            } catch (err) {
-                alert(err.response.data.message)
+            } else {
+                alert(res.message)
             }
         }
     }
@@ -48,10 +48,5 @@ export default {
 <style scoped>
 .container {
     max-width: 400px;
-}
-
-.not-have-account {
-    margin-top: 20px;
-    text-align: center;
 }
 </style>

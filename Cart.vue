@@ -1,35 +1,42 @@
 <template>
     <div class="container-top">
         <greeting :title="title"></greeting>
+        <btn class="btn-add-product" nameBtn="Thêm" @click="addProduct"></btn>
     </div>
     <input-search @search="handleSearch" class="input-search"></input-search>
-    <div class="list-product">
-        <product-cart v-for="product in filterProducts" 
-            :key="product._id" 
-            :product="product" 
-            @showDetail="handleShowDetail"
-            @addCart="addCart"
-            >
-        </product-cart>
+    <div class="row">
+        <table class="table">
+            <thead class="">
+                <tr>
+                    <th scope="col">Sản phẩm</th>
+                    <th scope="col">Giá</th>
+                    <th scope="col">Số lượng</th>
+                    <th scope="col">Hạn mượn</th>
+                    <th scope="col">Tác giả</th>
+                    <th scope="col">Nhà xuất bản</th>
+                    <th scope="col">Chức năng</th>
+                </tr>
+            </thead>
+            <tbody>
+                <product-item v-for="product in filterProducts" :key="product.id" :product="product"
+                    @deleteProduct="handleDeleteProduct" @showDetail="handleShowDetail">
+                </product-item>
+            </tbody>
+        </table>
     </div>
 </template>
 
 <script>
 import Greeting from '@/components/Common/Greeting.vue';
 import productService from '@/services/product.service';
-import cartService from '@/services/cart.service';
+import Btn from '@/components/Common/Btn.vue';
+import ProductItem from '@/components/Product/ProductItem.vue';
 import InputSearch from '@/components/Common/InputSearch.vue';
-import ProductCart from '@/components/Product/ProductCart.vue';
-import { mapStores } from 'pinia';
-import authStore from '@/stores/auth.store';
 
 export default {
-    computed: {
-        ...mapStores(authStore),
-    },
     data() {
         return {
-            title: 'Sản phẩm',
+            title: 'Quản lý sản phẩm',
             products: [],
             filterProducts: [],
             searchTerm: ""
@@ -37,8 +44,9 @@ export default {
     },
     components: {
         Greeting,
-        InputSearch,
-        ProductCart,
+        Btn,
+        ProductItem,
+        InputSearch
     },
     mounted() {
         this.getProducts();
@@ -67,6 +75,11 @@ export default {
             this.products = res.data;
             this.filterProducts = this.products;
         },
+        addProduct() {
+            this.$router.push({
+                name: 'addProductPage',
+            });
+        },
         async handleDeleteProduct(product) {
             if (window.confirm("Bạn có chắc chắn muốn xóa sản phẩm này?")) {
                 await this.deleteProduct(product._id);
@@ -89,10 +102,6 @@ export default {
                     data: JSON.stringify(product)
                 }
             });
-        },
-        async addCart(product) {
-            const response = await cartService.addToCart(this.authStore.getUser._id, product._id, 1);
-            alert(response.message)
         }
     },
 }
@@ -110,8 +119,8 @@ export default {
 
 .list-product {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
 }
 
 .btn-add-product {
