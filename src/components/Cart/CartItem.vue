@@ -18,7 +18,7 @@
             <count-btn :count="cart.quantity" @increment="incrementQuantity" @decrement="decrementQuantity"></count-btn>
         </td>
         <td>
-            <input type="checkbox" class="choose-product" id="choose" name="choose" value="checkboxValue" @change="handleChangeChooseProduct">
+            <choose-checkbox @changeChooseCheckbox="handleChangeChooseProduct"></choose-checkbox>
         </td>
         <td>
             <btn nameBtn="Xem" styleBtn="btn-primary" @click="handleShowDetail" class="btn-func"></btn>
@@ -30,6 +30,7 @@
 <script>
 import Btn from "@/components/Common/Btn.vue"
 import CountBtn from '../Common/CountBtn.vue';
+import ChooseCheckbox from '../Common/ChooseCheckbox.vue';
 
 export default {
     props: {
@@ -41,6 +42,7 @@ export default {
     components: {
         Btn,
         CountBtn,
+        ChooseCheckbox,
     },
     methods: {
         shortForm(text, maxLength) {
@@ -95,15 +97,6 @@ export default {
     object-position: center;
     margin: 0;
     padding: 0;
-}
-
-.choose-product {
-    width: 24px;
-    height: 24px;
-}
-
-.choose-product:hover {
-    cursor: pointer;
 }
 
 .btn-func {

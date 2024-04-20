@@ -1,7 +1,7 @@
 <template>
     <div class="container-top">
         <greeting :title="title"></greeting>
-        <btn class="btn-add-product" nameBtn="Đặt hàng" @click="orderProduct"></btn>
+        <btn class="btn-add-product" nameBtn="Mượn sách" @submit="orderProduct"></btn>
     </div>
     <input-search @search="handleSearch" class="input-search"></input-search>
     <div class="row">
@@ -12,7 +12,7 @@
                     <th scope="col">Giá</th>
                     <th scope="col">Hạn mượn</th>
                     <th scope="col">Số lượng</th>
-                    <th scope="col">Chọn sản phẩm</th>
+                    <th scope="col">Chọn sách mượn</th>
                     <th scope="col">Chức năng</th>
                 </tr>
             </thead>
@@ -23,6 +23,7 @@
                     @showDetail="handleShowDetail"
                     @incrementQuantity="incrementQuantity"
                     @decrementQuantity="decrementQuantity"
+                    @changeChooseProduct="handleChangeChooseProduct"
                     >
                 </cart-item>
             </tbody>
@@ -38,7 +39,7 @@ import cartService from '@/services/cart.service';
 import { mapStores } from 'pinia';
 import authStore from '@/stores/auth.store';
 import productService from '@/services/product.service';
-import CartItem from '@/components/Product/CartItem.vue';
+import CartItem from '@/components/Cart/CartItem.vue';
 
 export default {
     computed: {
@@ -49,7 +50,8 @@ export default {
             title: 'Giỏ hàng',
             carts: [],
             filterCarts: [],
-            searchTerm: ""
+            searchTerm: "",
+            checkedProducts: [],
         };
     },
     components: {
@@ -137,6 +139,32 @@ export default {
             }
             await this.getCarts()
             this.filter()
+        },
+        handleChangeChooseProduct({ cart, checked }) {
+            if (checked ) {
+                // find cart in checkedProducts
+                const found = this.checkedProducts.find(checkedProduct => {
+                    return checkedProduct._id == cart._id
+                })
+                if (!found)
+                    this.checkedProducts.push(cart)
+            } else {
+                this.checkedProducts = this.checkedProducts.filter(checkedProduct => {
+                    return checkedProduct._id != cart._id
+                })
+            }
+        },
+        orderProduct() {
+            if (this.checkedProducts.length == 0) {
+                alert("Vui lòng chọn sản phẩm cần đặt hàng")
+                return
+            }
+            this.$router.push({
+                name: 'paymentPage',
+                query: {
+                    data: JSON.stringify(this.checkedProducts)
+                }
+            });
         }
     },
 }

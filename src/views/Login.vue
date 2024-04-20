@@ -34,8 +34,10 @@ export default {
                 }
                 this.authStore.setUser(responseGetUser.data)
                 this.authStore.setRole(res.data.role)
-                console.log(this.authStore.getUser)
+                localStorage.setItem("role", res.data.role)
+                localStorage.setItem("user", JSON.stringify(responseGetUser.data))
                 alert(res.message)
+                this.$emit('login')
                 this.$router.push({ name: "userPage"})
             } else {
                 alert(res.message)
