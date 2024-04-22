@@ -4,6 +4,7 @@
 
 <script>
 export default {
+    emits: ['submit'],
     props: {
         nameBtn: {
             type: String,

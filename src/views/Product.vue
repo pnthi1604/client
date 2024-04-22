@@ -1,16 +1,14 @@
 <template>
-    <div class="container-top">
-        <greeting :title="title"></greeting>
-    </div>
-    <input-search @search="handleSearch" class="input-search"></input-search>
-    <div class="list-product">
-        <product-cart v-for="product in filterProducts" 
-            :key="product._id" 
-            :product="product" 
-            @showDetail="handleShowDetail"
-            @addCart="addCart"
-            >
-        </product-cart>
+    <div class="">
+        <div class="container-top">
+            <greeting :title="title"></greeting>
+        </div>
+        <input-search @search="handleSearch" class="input-search" :searchBy="searchBy"></input-search>
+        <div class="list-product">
+            <product-cart v-for="product in filterProducts" :key="product._id" :product="product"
+                @showDetail="handleShowDetail" @addCart="addCart">
+            </product-cart>
+        </div>
     </div>
 </template>
 
@@ -27,12 +25,14 @@ export default {
     computed: {
         ...mapStores(authStore),
     },
+    emits: ['login'],
     data() {
         return {
             title: 'Sản phẩm',
             products: [],
             filterProducts: [],
-            searchTerm: ""
+            searchTerm: "",
+            searchBy: "Tìm kiếm theo sản phẩm, tác giả, nhà xuất bản"
         };
     },
     components: {
@@ -85,9 +85,6 @@ export default {
                 params: {
                     id: product._id
                 },
-                query: {
-                    data: JSON.stringify(product)
-                }
             });
         },
         async addCart(product) {
@@ -110,8 +107,8 @@ export default {
 
 .list-product {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
 }
 
 .btn-add-product {

@@ -1,33 +1,35 @@
 <template>
-    <div class="container-top">
-        <greeting :title="title"></greeting>
-        <btn class="btn-add-product" nameBtn="Mượn sách" @submit="orderProduct"></btn>
-    </div>
-    <input-search @search="handleSearch" class="input-search"></input-search>
-    <div class="row">
-        <table class="table">
-            <thead class="">
-                <tr>
-                    <th scope="col">Sản phẩm</th>
-                    <th scope="col">Giá</th>
-                    <th scope="col">Hạn mượn</th>
-                    <th scope="col">Số lượng</th>
-                    <th scope="col">Chọn sách mượn</th>
-                    <th scope="col">Chức năng</th>
-                </tr>
-            </thead>
-            <tbody>
-                <cart-item v-for="cart in filterCarts" 
-                    :key="cart._id" :cart="cart" 
-                    @delete="handleDelete"
-                    @showDetail="handleShowDetail"
-                    @incrementQuantity="incrementQuantity"
-                    @decrementQuantity="decrementQuantity"
-                    @changeChooseProduct="handleChangeChooseProduct"
-                    >
-                </cart-item>
-            </tbody>
-        </table>
+    <div class="">
+        <div class="container-top">
+            <greeting :title="title"></greeting>
+            <btn class="btn-add-product" nameBtn="Mượn sách" @submit="orderProduct"></btn>
+        </div>
+        <input-search @search="handleSearch" class="input-search" :searchBy="searchBy"></input-search>
+        <div class="row">
+            <table class="table table-bordered">
+                <thead class="">
+                    <tr>
+                        <th scope="col">Sản phẩm</th>
+                        <th scope="col">Giá</th>
+                        <th scope="col">Hạn mượn</th>
+                        <th scope="col">Số lượng</th>
+                        <th scope="col">Chọn sách mượn</th>
+                        <th scope="col">Chức năng</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <cart-item v-for="cart in filterCarts" 
+                        :key="cart._id" :cart="cart" 
+                        @delete="handleDelete"
+                        @showDetail="handleShowDetail"
+                        @incrementQuantity="incrementQuantity"
+                        @decrementQuantity="decrementQuantity"
+                        @changeChooseProduct="handleChangeChooseProduct"
+                        >
+                    </cart-item>
+                </tbody>
+            </table>
+        </div>
     </div>
 </template>
 
@@ -51,7 +53,8 @@ export default {
             carts: [],
             filterCarts: [],
             searchTerm: "",
-            checkedProducts: [],
+            checkedCartsId: [],
+            searchBy: "Tìm kiếm theo sản phẩm"
         };
     },
     components: {
@@ -95,31 +98,27 @@ export default {
                 const res = await cartService.deleteCart(cart.userId._id, cart.productId._id)
                 if (res.status == "error")
                     alert(res.message)
+                // delete cart in checkedCartsId
+                this.checkedCartsId = this.checkedCartsId.filter(checkedProduct => {
+                    return checkedProduct != cart._id
+                })
                 await this.getCarts()
                 this.filter()
             }
         },
         async handleShowDetail(cart) {
-            console.log({
-                "cart in show detail": cart
-            })
             const res = await productService.getProductById(cart.productId._id)
             if (res.status == "error") {
                 alert(res.message)
                 return
             }
-            console.log({
-                "product in show detail": res.data
-            })
+
             const product = res.data
             this.$router.push({
                 name: 'productDetailPage',
                 params: {
                     id: product._id
                 },
-                query: {
-                    data: JSON.stringify(product)
-                }
             });
         },
         async incrementQuantity({cart, count}) {
@@ -142,27 +141,27 @@ export default {
         },
         handleChangeChooseProduct({ cart, checked }) {
             if (checked ) {
-                // find cart in checkedProducts
-                const found = this.checkedProducts.find(checkedProduct => {
-                    return checkedProduct._id == cart._id
+                // find cart in checkedCartsId
+                const found = this.checkedCartsId.find(checkedProduct => {
+                    return checkedProduct == cart._id
                 })
                 if (!found)
-                    this.checkedProducts.push(cart)
+                    this.checkedCartsId.push(cart._id)
             } else {
-                this.checkedProducts = this.checkedProducts.filter(checkedProduct => {
-                    return checkedProduct._id != cart._id
+                this.checkedCartsId = this.checkedCartsId.filter(checkedProduct => {
+                    return checkedProduct != cart._id
                 })
             }
         },
         orderProduct() {
-            if (this.checkedProducts.length == 0) {
+            if (this.checkedCartsId.length == 0) {
                 alert("Vui lòng chọn sản phẩm cần đặt hàng")
                 return
             }
             this.$router.push({
                 name: 'paymentPage',
                 query: {
-                    data: JSON.stringify(this.checkedProducts)
+                    data: JSON.stringify(this.checkedCartsId)
                 }
             });
         }

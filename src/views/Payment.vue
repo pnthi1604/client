@@ -1,18 +1,17 @@
 <template>
-    <div class="container-top">
-        <greeting :title="tilte"></greeting>
-    </div>
-    <div class="row">
-        <div class="col-8 custom-border-right">
-            <greeting :title="nameBill" class="greeting-bill"></greeting>
-            <bill :carts="carts"></bill>
-
+    <div class="">
+        <div class="container-top">
+            <greeting :title="tilte"></greeting>
         </div>
-        <div class="col-4">
-            <p class="title-form-info-payment">
-                Thông tin giao hàng
-            </p>
-            <payment-form :user="user" @submit="handleSubmit"></payment-form>
+        <div class="row">
+            <div class="col-8 custom-border-right">
+                <title-form :title="titleBill"></title-form>
+                <bill :carts="carts"></bill>
+            </div>
+            <div class="col-4">
+                <title-form :title="titleFormInfoPayment"></title-form>
+                <payment-form :user="user" @submit="handleSubmit" :key="user.key"></payment-form>
+            </div>
         </div>
     </div>
 </template>
@@ -24,6 +23,9 @@ import Bill from '@/components/Payment/Bill.vue';
 import PaymentForm from "@/components/Payment/PaymentForm.vue";
 import { mapStores } from "pinia";
 import useAuthStore from "@/stores/auth.store.js";
+import orderService from "@/services/order.service.js";
+import TitleForm from "@/components/Common/TitleForm.vue";
+import cartService from "@/services/cart.service";
 
 export default {
     computed: {
@@ -33,30 +35,46 @@ export default {
         return {
             tilte: "Thanh toán",
             carts: [],
-            nameBill: "Hóa đơn",
-            user: null
+            user: {
+                key: new Date(),
+            },
+            titleBill: "Hóa đơn",
+            titleFormInfoPayment: "Thông tin thanh toán",
         };
     },
-    created() {
+    beforeMount: async function(){
         if (!this.$route.query?.data) {
             alert("Có lỗi xảy ra, quay lại giỏ hàng");
             this.$router.push({ name: "CartPage" });
             return;
         }
-        this.carts = JSON.parse(this.$route.query.data);
-        if (this.authStore.user) {
-            this.user = this.authStore.user;
-        }
+        const cartsId = JSON.parse(this.$route.query.data);
+        this.carts = await Promise.all(cartsId.map(async (cartId) => {
+            const res = await cartService.getCart({ cartId });
+            return res.data;
+        }));
+        this.user = {
+            ...this.authStore.user,
+            key: new Date(),
+        };
     },
     components: {
         Greeting,
         InputSearch,
         Bill,
         PaymentForm,
+        TitleForm,
     },
     methods: {
-        handleSubmit(data) {
-            console.log(data);
+        async handleSubmit(infoPayment) {
+            const cartsId = this.carts.map((cart) => cart._id);
+            const resCreateOrder = await orderService.createOrder(cartsId, infoPayment);
+            if (resCreateOrder.status == "success") {
+                alert("Đặt hàng thành công");
+                this.$router.push({ name: "orderPage" });
+            } else {
+                alert("Đặt hàng thất bại");
+            }
         }
     }
 }

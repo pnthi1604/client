@@ -1,13 +1,15 @@
 <template>
     <div class="container">
-        <login :isRegister="isRegister" :titleForm="titleForm"></login>
+        <register :isRegister="isRegister" :titleForm="titleForm" @submit="handleSubmit"></register>
     </div>
 </template>
 
 <script>
-import Login from "@/components/Auth/Auth.vue";
+import Register from "@/components/Auth/Auth.vue";
+import authService from "@/services/auth.service";
 
 export default {
+    emits: ['login'],
     data() {
         return {
             isRegister: true,
@@ -15,8 +17,17 @@ export default {
         };
     },
     components: {
-        Login,
-    }
+        Register,
+    },
+    methods: {
+        async handleSubmit(user) {
+            const res = await authService.register(user);
+            alert(res.message)
+            if (res.status == "success") {
+                this.$router.push({ name: "login"})
+            }
+        }
+    },
 };
 </script>
 

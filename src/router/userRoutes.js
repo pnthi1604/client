@@ -1,9 +1,10 @@
 import Home from "@/views/Home.vue";
 import Product from "@/views/Product.vue";
-import Order from "@/views/Order.vue";
-import ProductDetai from "@/views/ProductDetail.vue";
 import Cart from "@/views/Cart.vue";
 import Payment from "@/views/Payment.vue";
+import Order from "@/views/Order.vue";
+import OrderDatail from "@/views/OrderDetail.vue";
+import ProductDetail from "@/views/ProductDetail.vue";
 
 const routes = [
     {
@@ -28,20 +29,11 @@ const routes = [
                         name: "productPage",
                     },
                     {
-                        path: "detail",
+                        path: ":id",
                         name: "productDetailPage",
-                        component: ProductDetai,
+                        component: ProductDetail,
                     },
                 ]
-            },
-            {
-                path: "orders",
-                component: Order,
-                name: "orderPage",
-                meta : {
-                    requiresAuth: true,
-                    role: "user",
-                },
             },
             {
                 path: "carts",
@@ -60,7 +52,26 @@ const routes = [
                     requiresAuth: true,
                     role: "user",
                 },
-            }
+            }, 
+            {
+                path: "orders",
+                meta : {
+                    requiresAuth: true,
+                    role: "user",
+                },
+                children: [
+                    {
+                        path: "",
+                        component: Order,
+                        name: "orderPage",
+                    },
+                    {
+                        path: ":id",
+                        component: OrderDatail,
+                        name: "orderDetailPage",
+                    },
+                ],
+            },
         ],
     }
 ]

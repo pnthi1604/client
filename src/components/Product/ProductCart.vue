@@ -1,24 +1,29 @@
 <template>
     <div class="product-card">
         <img :src="product.imageId.imageUrl" alt="Product Image" class="product-image" @click.stop="showDetail">
-        <div class="product-info" @click.stop="showDetail">
-            <p class="product-name">{{ shortForm(product.name) }}</p>
-            <p class="product-price">Giá: {{ product.price }}</p>
+        <div class="product-info" @click="showDetail">
+            <p class="product-name text-size-12">{{ shortForm(product.name, 24) }}</p>
+            <p class="product-price text-size-12">Giá: {{ product.price }}</p>
+            <p class="product-quantity text-size-12">Số lượng còn lại: {{ product.quantity }}</p>
         </div>
-        <button class="btn-add" @click="addCart">
-            Thêm giỏ hàng
-        </button>
+
+        <btn :nameBtn="'Thêm giỏ hàng'" @submit="addCart" :styleBtn="'btn-success btn-add'"></btn>
     </div>
 </template>
 
 <script>
+import Btn from "@/components/Common/Btn.vue";
+
 export default {
-    name: 'ProductCard',
+    emits: ['showDetail', 'addCart'],
     props: {
         product: {
             type: Object,
             required: true
         }
+    },
+    components: {
+        Btn
     },
     methods: {
         shortForm(text, maxLength) {
@@ -32,6 +37,9 @@ export default {
             return text;
         },
         showDetail() {
+            console.log({
+                product_show_detail: this.product,
+            })
             this.$emit('showDetail', this.product);
         },
         addCart() {
@@ -45,6 +53,10 @@ export default {
 p {
     padding: 0;
     margin: 0;
+}
+
+.text-size-12 {
+    font-size: 12px;
 }
 
 .product-card {
@@ -64,10 +76,6 @@ p {
 
 .product-info {
     margin-top: 12px;
-}
-
-.product-info {
-    font-size: 16px;
 }
 
 .product-info .product-price {

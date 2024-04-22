@@ -1,21 +1,23 @@
 <template>
-    <form>
-        <div class="form-group">
-            <label for="phone">Họ và tên</label>
-            <input type="text" class="form-control" id="name" placeholder="Enter your name" v-model="name">
-        </div>
-        <div class="form-group">
-            <label for="phone">Số điện thoại người nhận</label>
-            <input type="text" class="form-control" id="phone" placeholder="Enter phone" v-model="phone">
-        </div>
-        <div class="form-group">
-            <label for="address">Địa chỉ giao hàng</label>
-            <input type="text" class="form-control" id="address" placeholder="Enter address" v-model="address">
-        </div>
-        <div class="btn-submit-form">
-            <btn @click="submit"></btn>
-        </div>
-    </form>
+    <div class="">
+        <form>
+            <div class="form-group">
+                <label for="phone">Họ và tên</label>
+                <input type="text" class="form-control" id="name" placeholder="Enter your name" v-model="fullname">
+            </div>
+            <div class="form-group">
+                <label for="phone">Số điện thoại người nhận</label>
+                <input type="text" class="form-control" id="phone" placeholder="Enter phone" v-model="phone">
+            </div>
+            <div class="form-group">
+                <label for="address">Địa chỉ giao hàng</label>
+                <input type="text" class="form-control" id="address" placeholder="Enter address" v-model="address">
+            </div>
+            <div class="btn-submit-form">
+                <btn @click="submit"></btn>
+            </div>
+        </form>
+    </div>
 </template>
 
 <script>
@@ -29,16 +31,19 @@ export default {
     components: {
         Btn,
     },
-    created() {
+    beforeMount: function() {
         if (this.user) {
-            this.name = this.user.lastName + " " + this.user.firstName;
+            this.fullname = this.user.lastName + " " + this.user.firstName;
             this.phone = this.user.phone;
             this.address = this.user.address;
         }
+        console.log({
+            user: this.user
+        });
     },
     data() {
         return {
-            name: "",
+            fullname: "",
             phone: "",
             address: "",
         };
@@ -47,7 +52,7 @@ export default {
         submit(event) {
             event.preventDefault();
             this.$emit("submit", {
-                name: this.name,
+                fullname: this.fullname,
                 phone: this.phone,
                 address: this.address,
             });

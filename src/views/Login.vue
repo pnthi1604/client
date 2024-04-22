@@ -1,6 +1,10 @@
 <template>
     <div class="container">
         <login :isRegister="false" :titleForm="titleForm" @submit="handleSubmit"></login>
+        <div class="mt-3 text-center">
+            Bạn chưa có tài khoản?
+            <router-link :to="{name: 'register'}">Đăng ký ngay</router-link>
+        </div>
     </div>
 </template>
 
@@ -15,6 +19,7 @@ export default {
     computed: {
         ...mapStores(useAuthStore)
     },
+    emits: ['login'],
     data() {
         return {
             titleForm: 'Đăng nhập'

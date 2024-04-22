@@ -65,6 +65,7 @@ export default {
             default: 'Login'
         }
     },
+    emits: ['submit'],
     data() {
         return {
             lastName: '',
@@ -74,6 +75,7 @@ export default {
             address: '',
             phone: '',
             password: '',
+            selectedGender: "",
         }
     },
     components: {
@@ -96,6 +98,7 @@ export default {
                 address: this.address,
                 phone: this.phone,
                 password: this.password,
+                gender: this.selectedGender
             }
         },
         handleSubmit(event) {

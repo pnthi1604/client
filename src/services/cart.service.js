@@ -50,6 +50,31 @@ class CartService {
         }
     }
 
+    async getCart({ userId, productId, cartId }) {
+        try {
+            if (cartId) {
+                const data = (await this.api.get(`/cart/${cartId}`)).data
+                return {
+                    status: "success",
+                    message: data.message || "Cart retrieved successfully",
+                    data: data.data,
+                }
+            } else {
+                const data = (await this.api.get(`/${userId}/${productId}`)).data
+                return {
+                    status: "success",
+                    message: data.message || "Cart retrieved successfully",
+                    data: data.data,
+                }
+            }
+        } catch (err) {
+            return {
+                status: "error",
+                message: err.response.data.message,
+            }
+        }
+    }
+
     async updateCart(userId, productId, quantity) {
         try {
             const data = (await this.api.post(`/${userId}/${productId}`, { quantity })).data

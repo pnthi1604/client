@@ -21,8 +21,8 @@ export default {
     props: {
         cart: {
             type: Object,
-            required: true,
-        }
+            default: null,
+        },
     },
     methods: {
         shortForm(text, maxLength) {

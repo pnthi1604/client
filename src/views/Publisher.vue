@@ -1,19 +1,21 @@
 <template>
-    <div class="container-top">
-        <greeting :title="title"></greeting>
-        <btn class="btn-add-product" nameBtn="Thêm" @click="addPublisher"></btn>
-    </div>
-    <input-search @search="handleSearch" class="input-search"></input-search>
-    <div class="container-publisher-item">
-        <publisher-detail 
-            class="publisher-detail" 
-            v-for="publisher in filterPublishers" 
-            :item="publisher" 
-            :key="publisher._id"
-            @update="handleUpdate"
-            @delete="handleDelete"
-            >
-        </publisher-detail>
+    <div class="">
+        <div class="container-top">
+            <greeting :title="title"></greeting>
+            <btn class="btn-add-product" nameBtn="Thêm" @click="addPublisher"></btn>
+        </div>
+        <input-search @search="handleSearch" class="input-search"></input-search>
+        <div class="container-publisher-item">
+            <publisher-detail 
+                class="publisher-detail" 
+                v-for="publisher in filterPublishers" 
+                :item="publisher" 
+                :key="publisher._id"
+                @update="handleUpdate"
+                @delete="handleDelete"
+                >
+            </publisher-detail>
+        </div>
     </div>
 </template>
 
