@@ -82,11 +82,6 @@ export default {
             }, 0);
         }
     },
-    beforeMount() {
-        console.log({
-            order_item_in_invoice: this.orderItems
-        });
-    },
     methods: {
         handleShowDetail(orderItem) {
             this.$emit("showDetail", orderItem.productId);

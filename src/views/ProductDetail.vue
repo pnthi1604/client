@@ -52,6 +52,13 @@ export default {
     },
     methods: {
         async addCart() {
+            if (!this.authStore.getUser) {
+                alert("Vui lòng đăng nhập để thêm sản phẩm vào giỏ hàng")
+                this.$router.push({
+                    name: "login",
+                })
+                return
+            }
             const response = await cartService.addToCart(this.authStore.getUser._id, this.product._id, this.quantity);
             alert(response.message)
         },

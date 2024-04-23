@@ -95,8 +95,8 @@ p {
     border-radius: 5px;
     padding: 5px 10px;
     cursor: pointer;
-    height: 10%;
     margin-top: 12px;
+    height: 36px;
 }
 
 .btn-add:hover {
