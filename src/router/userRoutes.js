@@ -5,6 +5,7 @@ import Payment from "@/views/Payment.vue";
 import Order from "@/views/Order.vue";
 import OrderDatail from "@/views/OrderDetail.vue";
 import ProductDetail from "@/views/ProductDetail.vue";
+import ProductStatus from "@/views/ProductStatus.vue";
 
 const routes = [
     {
@@ -69,6 +70,11 @@ const routes = [
                         path: ":id",
                         component: OrderDatail,
                         name: "orderDetailPage",
+                    },
+                    {
+                        path: "product-status",
+                        component: ProductStatus,
+                        name: "productStatusPage",
                     },
                 ],
             },

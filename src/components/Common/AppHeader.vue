@@ -4,6 +4,7 @@
         <nav-item :title="'Sản phẩm'" :routerName="'productPage'" class="navbar-brand"></nav-item>
         <nav-item :title="'Giỏ hàng'" :routerName="'cartPage'" class="navbar-brand"></nav-item>
         <nav-item :title="'Đơn hàng'" :routerName="'orderPage'" class="navbar-brand"></nav-item>
+        <nav-item :title="'Sách đã mượn'" :routerName="'productStatusPage'" class="navbar-brand"></nav-item>
         <div class="dropdown">
             <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown"
                 aria-expanded="false">
