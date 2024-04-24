@@ -28,6 +28,7 @@ export default {
             required: true
         }
     },
+    emits: ['update', 'delete'],
     methods: {
         shortForm(text, maxLength) {
             if (!maxLength)

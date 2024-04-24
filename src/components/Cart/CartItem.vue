@@ -44,6 +44,7 @@ export default {
         CountBtn,
         ChooseCheckbox,
     },
+    emits: ['delete', 'showDetail', 'changeChooseProduct', 'incrementQuantity', 'decrementQuantity'],
     methods: {
         shortForm(text, maxLength) {
             if (!maxLength)

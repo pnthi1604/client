@@ -62,7 +62,6 @@ export default {
     },
     data() {
         return {
-            totalValue: 0,
         }
     },
     computed: {

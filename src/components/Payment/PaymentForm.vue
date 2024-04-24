@@ -28,6 +28,7 @@ export default {
             type: Object,
         }
     },
+    emits: ['submit'],
     components: {
         Btn,
     },

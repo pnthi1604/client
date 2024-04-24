@@ -58,6 +58,7 @@
 import Btn from "@/components/Common/Btn.vue";
 
 export default {
+    emits: ['submit'],
     data() {
         return {
             _id: null,
@@ -96,7 +97,7 @@ export default {
         }
     },
     methods: {
-        onSelect() {
+        async onSelect() {
             //reset
             this.message = ""
             this.file = null;

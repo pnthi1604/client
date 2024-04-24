@@ -2,17 +2,18 @@
     <tr>
         <td>
             <div class="item">
-                <img :src="orderItem.productId.imageId.imageUrl" alt="Sản phẩm" width="100" height="100" class="item-img">
+                <img v-lazy="orderItem?.productId?.imageId?.imageUrl" alt="Sản phẩm" width="100" height="100" class="item-img">
                 <p class="item-name">
-                    {{ shortForm(orderItem.productId.name) }}
+                    {{ shortForm(orderItem?.productId?.name) }}
                 </p>
             </div>
         </td>
-        <td>{{ borrowDate ? borrowDate : "Đang cập nhật" }}</td>
-        <td>{{ returnDate ? returnDate : "Đang cập nhật" }}</td>
-        <td>{{ orderItem.quantity }}</td>
-        <td>{{ orderItem.price }}</td>
-        <td>{{ orderItem.quantity * orderItem.price }}</td>
+        <!-- <td>{{ borrowDate ? borrowDate : "Đang cập nhật" }}</td> -->
+        <!-- <td>{{ returnDate ? returnDate : "Đang cập nhật" }}</td> -->
+        <td>{{ orderItem?.borrowingTime }}</td>
+        <td>{{ orderItem?.quantity }}</td>
+        <td>{{ orderItem?.price }}</td>
+        <td>{{ orderItem?.quantity * orderItem?.price }}</td>
         <td class="func">
             <btn nameBtn="Xem" styleBtn="btn-primary" @click="handleShowDetail" class="btn-func"></btn>
         </td>
@@ -32,15 +33,12 @@ export default {
             default: null,
         },
     },
+    emits: ['showDetail'],
     data() {
         return {
             returnDate: null,
             borrowDate: null,
         }
-    },
-    beforeMount() {
-        this.returnDate = this.convertFormDate(this.orderItem.returnDate);
-        this.borrowDate = this.convertFormDate(this.orderItem.borrowDate);
     },
     methods: {
         shortForm(text, maxLength) {

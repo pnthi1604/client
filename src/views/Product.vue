@@ -88,6 +88,10 @@ export default {
             });
         },
         async addCart(product) {
+            if (!this.authStore.getUser) {
+                this.$emit('login');
+                return
+            }
             const response = await cartService.addToCart(this.authStore.getUser._id, product._id, 1);
             alert(response.message)
         }

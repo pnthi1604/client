@@ -21,6 +21,11 @@
                     </th>
                     <th scope="col">
                         <p>
+                            Số lượng
+                        </p>
+                    </th>
+                    <th scope="col">
+                        <p>
                             Trạng thái
                         </p>
                     </th>
@@ -35,18 +40,22 @@
                 <tr v-for="item in items" :key="item._id">
                     <td>
                         <div class="item">
-                            <img :src="item.productId.imageId.imageUrl" alt="Sản phẩm" width="100" height="100" class="item-img">
+                            <img :src="item?.productId?.imageId?.imageUrl" alt="Sản phẩm" width="100" height="100"
+                                class="item-img">
                             <p class="item-name">
-                                {{ shortForm(item.productId.name) }}
+                                {{ shortForm(item?.productId?.name) }}
                             </p>
                         </div>
                     </td>
-                    <td>{{ convertFormDate(item.borrowDate) }}</td>
-                    <td>{{ convertFormDate(item.returnDate) }}</td>
-                    <td>{{ item.status }}</td>
+                    <td>{{ convertFormDate(item?.borrowDate) }}</td>
+                    <td>{{ convertFormDate(item?.returnDate) }}</td>
+                    <td>{{ item?.quantity }}</td>
+                    <td>{{ item?.status }}</td>
                     <td class="func">
-                        <btn v-if="item.status == 'Đang mượn'" nameBtn="Trả sách" styleBtn="btn-warning" @click="handleReturnProduct(item)"
+                        <btn nameBtn="Xem" styleBtn="btn-primary" @click="handleShowDetail(item?.productId)"
                             class="btn-func"></btn>
+                        <btn v-if="item?.status == 'Đang mượn'" nameBtn="Trả sách" styleBtn="btn-warning"
+                            @click="handleReturnProduct(item)" class="btn-func"></btn>
                     </td>
                 </tr>
             </tbody>
@@ -163,7 +172,15 @@ export default {
                 const index = this.items.findIndex(i => i._id == resUpdateReturnProduct.data._id);
                 this.items[index].status = resUpdateReturnProduct.data.status
             }
-        }
+        },
+        async handleShowDetail(productId) {
+            this.$router.push({
+                name: "productDetailPage",
+                params: {
+                    id: productId._id,
+                }
+            })
+        },
     },
 }
 </script>
@@ -173,11 +190,7 @@ export default {
     text-align: center;
     padding: 20px;
 }
-.func {
-    display: flex;
-    justify-content: space-around;
-    border: none;
-}
+
 .btn-func {
     width: 60px;
     margin-top: 4px;

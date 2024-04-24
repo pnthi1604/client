@@ -4,6 +4,7 @@
 
 <script>
 export default {
+    emits: ['changeChooseCheckbox'],
     methods: {
         changeChooseCheckbox(event) {
             this.$emit('changeChooseCheckbox', event);

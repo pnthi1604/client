@@ -2,16 +2,16 @@
     <tr>
         <td>
             <div class="d-flex">
-                <img :src="cart.productId.imageId.imageUrl" alt="product" class="img-fluid" style="width: 50px; height: 50px;">
+                <img v-lazy="cart?.productId?.imageId?.imageUrl" alt="product" class="img-fluid" style="width: 50px; height: 50px;">
                 <div class="d-flex flex-column justify-content-center">
                     <p>{{ shortForm(cart.productId.name, 30) }}</p>
                 </div>
             </div>
         </td>
-        <td>{{ cart.productId.borrowingTime }}</td>
-        <td>{{ cart.quantity }}</td>
-        <td>{{ cart.productId.price }}</td>
-        <td>{{ cart.quantity * cart.productId.price }}</td>
+        <td>{{ cart?.productId?.borrowingTime }}</td>
+        <td>{{ cart?.quantity }}</td>
+        <td>{{ cart?.productId.price }}</td>
+        <td>{{ cart?.quantity * cart?.productId.price }}</td>
     </tr>
 </template>
 

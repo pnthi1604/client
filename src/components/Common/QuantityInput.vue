@@ -16,6 +16,7 @@ export default {
             quantity: 1
         }
     },
+    emits: ['changeQuantity'],
     watch: {
         quantity: function (value) {
             this.$emit('changeQuantity', value)

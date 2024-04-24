@@ -46,7 +46,7 @@ export default {
     data() {
         return {
             title: 'Chi tiết sản phẩm',
-            product: "",
+            product: {},
             quantity: 1
         }
     },
