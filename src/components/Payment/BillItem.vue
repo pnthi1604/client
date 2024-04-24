@@ -38,3 +38,9 @@ export default {
     },
 }
 </script>
+
+<style scoped>
+.img-fluid {
+    margin-right: 4px;
+}
+</style>

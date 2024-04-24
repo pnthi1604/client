@@ -163,6 +163,8 @@ export default {
         async handleReturnProduct(item) {
             const resUpdateReturnProduct = await returnProductService.update(item._id, {
                 status: "Đã trả",
+                productId: item.productId._id,
+                quantity: item.quantity,
             });
             if (resUpdateReturnProduct.status == "error") {
                 alert(resUpdateReturnProduct.message);
