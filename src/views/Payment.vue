@@ -33,7 +33,7 @@ export default {
     },
     data() {
         return {
-            tilte: "Thanh toán",
+            tilte: "Đặt hàng",
             carts: [],
             user: {
                 key: new Date(),
