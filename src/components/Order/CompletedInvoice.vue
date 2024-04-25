@@ -101,6 +101,10 @@ p {
     padding: 0;
 }
 
+table {
+    background: #ebd4b6;
+}
+
 .total-value {
     font-weight: bold;
 }

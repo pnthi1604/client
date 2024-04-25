@@ -2,8 +2,8 @@
     <div class="">
         <div class="container-top">
             <greeting :title="title"></greeting>
+            <input-search @search="handleSearch" class="input-search" :searchBy="searchBy"></input-search>
         </div>
-        <input-search @search="handleSearch" class="input-search" :searchBy="searchBy"></input-search>
         <div class="list-product">
             <product-cart v-for="product in filterProducts" :key="product._id" :product="product"
                 @showDetail="handleShowDetail" @addCart="addCart">
@@ -111,7 +111,7 @@ export default {
 
 .list-product {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     gap: 8px;
 }
 

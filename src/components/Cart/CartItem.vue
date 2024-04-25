@@ -48,7 +48,7 @@ export default {
     methods: {
         shortForm(text, maxLength) {
             if (!maxLength)
-                maxLength = 20
+                maxLength = 40
             if (text.length > maxLength) {
                 return text.substring(0, maxLength) + '...';
             }

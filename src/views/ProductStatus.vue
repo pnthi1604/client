@@ -193,6 +193,10 @@ export default {
     padding: 20px;
 }
 
+table {
+    background: #ebd4b6;
+}
+
 .btn-func {
     width: 60px;
     margin-top: 4px;

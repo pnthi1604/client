@@ -1,5 +1,5 @@
 <template>
-    <div class="">
+    <div class="home-page">
         <greeting :title="tilte"></greeting>
     </div>
 </template>
@@ -9,7 +9,7 @@ import Greeting from "@/components/Common/Greeting.vue";
 export default {
     data() {
         return {
-            tilte: "Chào mừng bạn!",
+            tilte: "Chào mừng bạn đến với dịch vụ mượn sách!",
         };
     },
     components: {
@@ -19,8 +19,17 @@ export default {
 </script>
 
 <style scoped>
+
 .title {
     text-align: center;
     color: plum;
+}
+
+.home-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-size: 1.5rem;
 }
 </style>

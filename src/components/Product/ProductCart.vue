@@ -37,9 +37,6 @@ export default {
             return text;
         },
         showDetail() {
-            console.log({
-                product_show_detail: this.product,
-            })
             this.$emit('showDetail', this.product);
         },
         addCart() {
@@ -67,6 +64,7 @@ p {
     text-align: center;
     width: 100%;
     box-shadow: 3px 3px 10px #e0e0e0;
+    background: #ebd4b6;
 }
 
 .product-card:hover {

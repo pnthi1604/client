@@ -3,7 +3,6 @@
     <div class="container">
         <router-view @login="handleLogin"></router-view>
     </div>
-    <!-- <app-footer class="app-footer"></app-footer> -->
 </template>
 
 <script>
@@ -56,10 +55,10 @@ export default {
 
 <style>
 .container {
-    width: 80%;
     margin: 0 auto;
     margin-top: 12px;
     min-height: 1000px;
+    background-image: url('./assets/images/bg.jpg');
 }
 
 .app-footer {

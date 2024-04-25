@@ -8,7 +8,7 @@
             <div class="row">
                 <quantity-input @changeQuantity="handleInputQuantityChange"></quantity-input>
                 <div class="col-md-6">
-                    <btn :nameBtn="'Thêm vào giỏ hàng'" @submit="addCart"></btn>
+                    <btn :nameBtn="'Thêm vào giỏ'" @submit="addCart"></btn>
                 </div>
             </div>
         </div>

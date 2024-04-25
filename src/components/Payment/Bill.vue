@@ -60,10 +60,6 @@ export default {
             required: true,
         }
     },
-    data() {
-        return {
-        }
-    },
     computed: {
         totalValue() {
             return this.carts.reduce((total, cart) => total + cart.productId.price * cart.quantity, 0);
@@ -79,6 +75,10 @@ export default {
 p {
     margin: 0;
     padding: 0;
+}
+
+table {
+    background: #ebd4b6;
 }
 
 .total-value {

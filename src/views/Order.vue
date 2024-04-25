@@ -136,8 +136,10 @@ export default {
     padding: 20px;
 }
 
-.table {
+table {
     text-align: center;
+    background: #ebd4b6;
+    margin: 0 32px;
 }
 
 .input-search {

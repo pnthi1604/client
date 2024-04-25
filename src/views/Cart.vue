@@ -3,8 +3,8 @@
         <div class="container-top">
             <greeting :title="title"></greeting>
             <btn class="btn-add-product" nameBtn="Mượn sách" @submit="orderProduct"></btn>
+            <input-search @search="handleSearch" class="input-search" :searchBy="searchBy"></input-search>
         </div>
-        <input-search @search="handleSearch" class="input-search" :searchBy="searchBy"></input-search>
         <div class="row">
             <table class="table table-bordered">
                 <thead class="">
@@ -175,8 +175,10 @@ export default {
     padding: 20px;
 }
 
-.table {
+table {
     text-align: center;
+    background: #ebd4b6;
+    margin: 0 32px;
 }
 
 .input-search {
@@ -190,6 +192,6 @@ export default {
 }
 
 .btn-add-product {
-    margin: 0 auto;
+    margin: 8px auto;
 }
 </style>

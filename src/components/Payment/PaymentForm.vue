@@ -38,9 +38,6 @@ export default {
             this.phone = this.user.phone;
             this.address = this.user.address;
         }
-        console.log({
-            user: this.user
-        });
     },
     data() {
         return {

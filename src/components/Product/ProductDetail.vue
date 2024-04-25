@@ -40,6 +40,7 @@ export default {
     width: 100%;
     min-height: 200px;
     box-shadow: 3px 3px 10px #e0e0e0;
+    background: #ebd4b6;
 }
 
 .product-item {
